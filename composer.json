@@ -6,6 +6,7 @@
     "homepage": "https://buzzingpixel.com/",
     "require": {
         "php": ">=7.2",
+        "ext-pdo": "*",
         "atlas/orm": "^3.1",
         "atlas/cli": "^2.2"
     },

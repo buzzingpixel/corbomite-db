@@ -24,5 +24,8 @@
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "extra": {
+        "diConfigFilePath": "src/diConfig.php"
     }
 }

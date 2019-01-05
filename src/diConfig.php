@@ -40,7 +40,7 @@ return [
     SkeletonCliGenerator::class => function () {
         return new SkeletonCliGenerator(
             new Config([
-                'pdo' => [Di::get('PDO')],
+                'pdo' => [Di::get(PDO::class)],
                 'namespace' => getenv('CORBOMITE_DB_DATA_NAMESPACE'),
                 'directory' => getenv('CORBOMITE_DB_DATA_DIRECTORY'),
             ]),

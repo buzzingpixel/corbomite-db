@@ -35,7 +35,7 @@ class Orm extends Atlas
             new MapperQueryFactory()
         );
 
-        return new Orm(
+        return new self(
             new MapperLocator($tableLocator),
             new $transactionClass($connectionLocator)
         );

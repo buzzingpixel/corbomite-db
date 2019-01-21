@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @license Apache-2.0
  */
 
-namespace corbomite\db;
+namespace corbomite\db\cli;
 
 use Atlas\Cli\Skeleton;
 

@@ -7,14 +7,16 @@ declare(strict_types=1);
  * @license Apache-2.0
  */
 
+use Atlas\Cli\Fsio;
 use corbomite\di\Di;
 use corbomite\db\PDO;
 use corbomite\db\Orm;
-use Atlas\Cli\Fsio;
 use Atlas\Cli\Config;
 use Atlas\Cli\Logger;
-use corbomite\db\SkeletonCliGenerator;
-use corbomite\db\GenerateSkeletonAction;
+use corbomite\db\Factory;
+use corbomite\db\cli\SkeletonCliGenerator;
+use corbomite\db\services\BuildQueryService;
+use corbomite\db\cli\GenerateSkeletonAction;
 
 return [
     PDO::class => function () {
@@ -50,5 +52,8 @@ return [
     },
     GenerateSkeletonAction::class => function () {
         return new GenerateSkeletonAction(Di::get(SkeletonCliGenerator::class));
+    },
+    BuildQueryService::class => function () {
+        return new BuildQueryService(new Factory());
     },
 ];

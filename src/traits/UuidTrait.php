@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @license Apache-2.0
  */
 
-namespace corbomite\db\services;
+namespace corbomite\db\traits;
 
 use corbomite\db\models\UuidModel;
 use corbomite\db\interfaces\UuidModelInterface;

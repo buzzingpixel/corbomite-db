@@ -14,6 +14,8 @@ use corbomite\db\Orm;
 use Atlas\Cli\Config;
 use Atlas\Cli\Logger;
 use corbomite\db\Factory;
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use corbomite\db\cli\SkeletonCliGenerator;
 use corbomite\db\services\BuildQueryService;
 use corbomite\db\cli\GenerateSkeletonAction;
@@ -55,5 +57,13 @@ return [
     },
     BuildQueryService::class => function () {
         return new BuildQueryService(new Factory());
+    },
+    'UuidFactoryWithOrderedTimeCodec' => function () {
+        $uuidFactory = new UuidFactory();
+        $uuidFactory->setCodec(
+            new OrderedTimeCodec($uuidFactory->getUuidBuilder())
+        );
+
+        return $uuidFactory;
     },
 ];

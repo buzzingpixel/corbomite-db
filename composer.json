@@ -1,7 +1,7 @@
 {
     "name": "buzzingpixel/corbomite-db",
     "description": "Corbomite DB",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "license": "Apache-2.0",
     "homepage": "https://buzzingpixel.com/",
     "require": {
@@ -10,7 +10,8 @@
         "atlas/orm": "^3.1",
         "atlas/cli": "^2.2",
         "buzzingpixel/corbomite-di": "^1.0",
-        "buzzingpixel/corbomite-cli": "^1.0"
+        "buzzingpixel/corbomite-cli": "^1.0",
+        "ramsey/uuid": "^3.8"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

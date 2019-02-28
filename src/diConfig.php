@@ -8,20 +8,20 @@ declare(strict_types=1);
  */
 
 use Atlas\Cli\Fsio;
-use corbomite\di\Di;
 use corbomite\db\PDO;
 use corbomite\db\Orm;
 use Atlas\Cli\Config;
 use Atlas\Cli\Logger;
 use corbomite\db\Factory;
 use Ramsey\Uuid\UuidFactory;
+use Psr\Container\ContainerInterface;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use corbomite\db\cli\SkeletonCliGenerator;
 use corbomite\db\services\BuildQueryService;
 use corbomite\db\cli\GenerateSkeletonAction;
 
 return [
-    PDO::class => function () {
+    PDO::class => static function () {
         $dsnPrefix = getenv('DB_DSN_PREFIX') ?: 'mysql';
         $host = getenv('DB_HOST') ?: 'localhost';
         $db = getenv('DB_DATABASE');
@@ -37,13 +37,13 @@ return [
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
     },
-    Orm::class => function () {
-        return Orm::new(Di::get(PDO::class));
+    Orm::class => static function (ContainerInterface $di) {
+        return Orm::new($di->get(PDO::class));
     },
-    SkeletonCliGenerator::class => function () {
+    SkeletonCliGenerator::class => static function (ContainerInterface $di) {
         return new SkeletonCliGenerator(
             new Config([
-                'pdo' => [Di::get(PDO::class)],
+                'pdo' => [$di->get(PDO::class)],
                 'namespace' => getenv('CORBOMITE_DB_DATA_NAMESPACE'),
                 'directory' => getenv('CORBOMITE_DB_DATA_DIRECTORY'),
             ]),
@@ -51,13 +51,13 @@ return [
             new Logger()
         );
     },
-    GenerateSkeletonAction::class => function () {
-        return new GenerateSkeletonAction(Di::get(SkeletonCliGenerator::class));
+    GenerateSkeletonAction::class => static function (ContainerInterface $di) {
+        return new GenerateSkeletonAction($di->get(SkeletonCliGenerator::class));
     },
-    BuildQueryService::class => function () {
+    BuildQueryService::class => static function () {
         return new BuildQueryService(new Factory());
     },
-    'UuidFactoryWithOrderedTimeCodec' => function () {
+    'UuidFactoryWithOrderedTimeCodec' => static function () {
         $uuidFactory = new UuidFactory();
         $uuidFactory->setCodec(
             new OrderedTimeCodec($uuidFactory->getUuidBuilder())

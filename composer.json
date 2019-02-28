@@ -24,7 +24,9 @@
         }
     },
     "config": {
-        "optimize-autoloader": true
+        "bin-compat": "full",
+        "optimize-autoloader": true,
+        "sort-packages": true
     },
     "extra": {
         "diConfigFilePath": "src/diConfig.php",

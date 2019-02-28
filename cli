@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use corbomite\di\Di;
+use corbomite\db\Orm;
+use Atlas\Pdo\Connection;
+
+require __DIR__ . '/vendor/autoload.php';
+
+putenv('DB_HOST=db');
+putenv('DB_DATABASE=site');
+putenv('DB_USER=site');
+putenv('DB_PASSWORD=secret');
+
+// $orm = Di::diContainer()->get(Orm::class);
+// var_dump($orm);
+// die;
+
+$connection = Di::diContainer()->get(Connection::class);
+
+$pdo = $connection->getPdo();
+
+// var_dump($pdo->exec('CREATE TABLE IF NOT EXISTS site.test (ID INT(11))'));
+// var_dump($connection->fetchAll('SELECT * FROM site.test'));
+// die;

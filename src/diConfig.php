@@ -13,6 +13,7 @@ use corbomite\db\Orm;
 use Atlas\Cli\Config;
 use Atlas\Cli\Logger;
 use corbomite\db\Factory;
+use Atlas\Pdo\Connection;
 use Ramsey\Uuid\UuidFactory;
 use Psr\Container\ContainerInterface;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
@@ -37,8 +38,11 @@ return [
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
     },
+    Connection::class => static function (ContainerInterface $di) {
+        return new Connection($di->get(PDO::class));
+    },
     Orm::class => static function (ContainerInterface $di) {
-        return Orm::new($di->get(PDO::class));
+        return Orm::new($di->get(Connection::class));
     },
     SkeletonCliGenerator::class => static function (ContainerInterface $di) {
         return new SkeletonCliGenerator(

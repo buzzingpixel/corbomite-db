@@ -10,9 +10,14 @@ When you require this into a Corbomite project, the CLI commands and dependency 
 
 ### Environment Variables
 
+The following environment variables are optional:
+
+- `DB_DSN_PREFIX` (defaults to `mysql`)
+- `DB_HOST` (defaults to `localhost`)
+- `DB_CHARSET` (defaults to `utf8mb4`)
+
 The following environment variables need to be set:
 
-- `DB_HOST`
 - `DB_DATABASE`
 - `DB_USER`
 - `DB_PASSWORD`

@@ -1,1 +1,0 @@
-Adding DB starter pack to /var/lib/mysql

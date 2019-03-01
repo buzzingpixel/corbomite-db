@@ -29,8 +29,13 @@ return [
         $user = getenv('DB_USER');
         $pass = getenv('DB_PASSWORD');
         $cset = getenv('DB_CHARSET') ?: 'utf8mb4';
+        $port = getenv('DB_PORT') ?: '';
 
-        $dsn = $dsnPrefix . ':host=' . $host . ';dbname=' . $db . ';charset=' . $cset;
+        if ($port) {
+            $port = ':' . $port;
+        }
+
+        $dsn = $dsnPrefix . ':host=' . $host . $port . ';dbname=' . $db . ';charset=' . $cset;
 
         return new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

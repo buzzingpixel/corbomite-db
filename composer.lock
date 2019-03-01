@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "052517f21bc31648e6b70699929179d4",
+    "content-hash": "554fbec863de905590b0e07989079dc6",
     "packages": [
         {
             "name": "2bj/phanybar",
@@ -590,16 +590,16 @@
         },
         {
             "name": "codedungeon/phpunit-result-printer",
-            "version": "0.26.0",
+            "version": "0.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikeerickson/phpunit-pretty-result-printer.git",
-                "reference": "55ddb3894b28f70df90b6053cb121da91cac1dc1"
+                "reference": "70efe139f174954392582103355a1b4a3d9022e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/55ddb3894b28f70df90b6053cb121da91cac1dc1",
-                "reference": "55ddb3894b28f70df90b6053cb121da91cac1dc1",
+                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/70efe139f174954392582103355a1b4a3d9022e5",
+                "reference": "70efe139f174954392582103355a1b4a3d9022e5",
                 "shasum": ""
             },
             "require": {
@@ -639,7 +639,7 @@
                 "result-printer",
                 "testing"
             ],
-            "time": "2019-02-05T19:45:42+00:00"
+            "time": "2019-02-28T18:52:43+00:00"
         },
         {
             "name": "filp/whoops",
@@ -1110,16 +1110,16 @@
         },
         {
             "name": "php-di/php-di",
-            "version": "6.0.5",
+            "version": "6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-DI/PHP-DI.git",
-                "reference": "5e8b809960d5c3bfa096a90da9a78650e80b1f0e"
+                "reference": "f16f27b7bc0876c7e76f568e0733d59997c8ec9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/5e8b809960d5c3bfa096a90da9a78650e80b1f0e",
-                "reference": "5e8b809960d5c3bfa096a90da9a78650e80b1f0e",
+                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/f16f27b7bc0876c7e76f568e0733d59997c8ec9c",
+                "reference": "f16f27b7bc0876c7e76f568e0733d59997c8ec9c",
                 "shasum": ""
             },
             "require": {
@@ -1169,7 +1169,7 @@
                 "ioc",
                 "psr11"
             ],
-            "time": "2018-09-17T15:34:44+00:00"
+            "time": "2019-02-28T14:45:49+00:00"
         },
         {
             "name": "php-di/phpdoc-reader",

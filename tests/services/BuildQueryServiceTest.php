@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace corbomite\tests;
+namespace corbomite\tests\services;
 
 use corbomite\db\Orm;
 use corbomite\db\Factory;

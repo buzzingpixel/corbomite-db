@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace corbomite\tests;
+namespace corbomite\tests\cli;
 
 use PHPUnit\Framework\TestCase;
 use corbomite\db\cli\SkeletonCliGenerator;

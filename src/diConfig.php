@@ -8,43 +8,46 @@ declare(strict_types=1);
  */
 
 use Atlas\Cli\Fsio;
-use corbomite\di\Di;
 use corbomite\db\PDO;
 use corbomite\db\Orm;
 use Atlas\Cli\Config;
 use Atlas\Cli\Logger;
 use corbomite\db\Factory;
+use Atlas\Pdo\Connection;
 use Ramsey\Uuid\UuidFactory;
+use Psr\Container\ContainerInterface;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use corbomite\db\cli\SkeletonCliGenerator;
 use corbomite\db\services\BuildQueryService;
 use corbomite\db\cli\GenerateSkeletonAction;
 
 return [
-    PDO::class => function () {
-        $host = getenv('DB_HOST');
+    PDO::class => static function () {
+        $dsnPrefix = getenv('DB_DSN_PREFIX') ?: 'mysql';
+        $host = getenv('DB_HOST') ?: 'localhost';
         $db = getenv('DB_DATABASE');
         $user = getenv('DB_USER');
         $pass = getenv('DB_PASSWORD');
-        $cset = 'utf8mb4';
+        $cset = getenv('DB_CHARSET') ?: 'utf8mb4';
 
-        $dsn = 'mysql:host=' . $host . ';dbname=' . $db . ';charset=' . $cset;
+        $dsn = $dsnPrefix . ':host=' . $host . ';dbname=' . $db . ';charset=' . $cset;
 
-        $options = [
+        return new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        return new PDO($dsn, $user, $pass, $options);
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ]);
     },
-    Orm::class => function () {
-        return Orm::new(Di::get(PDO::class));
+    Connection::class => static function (ContainerInterface $di) {
+        return new Connection($di->get(PDO::class));
     },
-    SkeletonCliGenerator::class => function () {
+    Orm::class => static function (ContainerInterface $di) {
+        return Orm::new($di->get(Connection::class));
+    },
+    SkeletonCliGenerator::class => static function (ContainerInterface $di) {
         return new SkeletonCliGenerator(
             new Config([
-                'pdo' => [Di::get(PDO::class)],
+                'pdo' => [$di->get(PDO::class)],
                 'namespace' => getenv('CORBOMITE_DB_DATA_NAMESPACE'),
                 'directory' => getenv('CORBOMITE_DB_DATA_DIRECTORY'),
             ]),
@@ -52,13 +55,13 @@ return [
             new Logger()
         );
     },
-    GenerateSkeletonAction::class => function () {
-        return new GenerateSkeletonAction(Di::get(SkeletonCliGenerator::class));
+    GenerateSkeletonAction::class => static function (ContainerInterface $di) {
+        return new GenerateSkeletonAction($di->get(SkeletonCliGenerator::class));
     },
-    BuildQueryService::class => function () {
+    BuildQueryService::class => static function () {
         return new BuildQueryService(new Factory());
     },
-    'UuidFactoryWithOrderedTimeCodec' => function () {
+    'UuidFactoryWithOrderedTimeCodec' => static function () {
         $uuidFactory = new UuidFactory();
         $uuidFactory->setCodec(
             new OrderedTimeCodec($uuidFactory->getUuidBuilder())

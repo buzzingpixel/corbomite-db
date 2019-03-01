@@ -1,5 +1,7 @@
 # Corbomite DB
 
+<p><a href="https://travis-ci.org/buzzingpixel/corbomite-db"><img src="https://travis-ci.org/buzzingpixel/corbomite-db.svg?branch=master"></a></p>
+
 Part of BuzzingPixel's Corbomite project.
 
 This project provides a very thin layer on top of [Atlas](http://atlasphp.io/) to make it available to Corbomite's DI and CLI.
@@ -10,9 +12,14 @@ When you require this into a Corbomite project, the CLI commands and dependency 
 
 ### Environment Variables
 
+The following environment variables are optional:
+
+- `DB_DSN_PREFIX` (defaults to `mysql`)
+- `DB_HOST` (defaults to `localhost`)
+- `DB_CHARSET` (defaults to `utf8mb4`)
+
 The following environment variables need to be set:
 
-- `DB_HOST`
 - `DB_DATABASE`
 - `DB_USER`
 - `DB_PASSWORD`
@@ -33,7 +40,7 @@ You should inject `\corbomite\db\Factory` into your classes where you need the O
 
 ## License
 
-Copyright 2018 BuzzingPixel, LLC
+Copyright 2019 BuzzingPixel, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

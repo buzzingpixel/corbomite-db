@@ -16,17 +16,18 @@ The following environment variables are optional:
 
 - `DB_DSN_PREFIX` (defaults to `mysql`)
 - `DB_HOST` (defaults to `localhost`)
-- `DB_CHARSET` (defaults to `utf8mb4`)
+- `DB_PORT` (defaults to none, can also set to 'false' to disable)
+- `DB_DATABASE` (can also set to 'false' to disable)
+- `DB_CHARSET` (defaults to `utf8mb4`, can also set to 'false' to disable)
 
 The following environment variables need to be set:
 
-- `DB_DATABASE`
 - `DB_USER`
 - `DB_PASSWORD`
 - `CORBOMITE_DB_DATA_NAMESPACE`
 - `CORBOMITE_DB_DATA_DIRECTORY`
 
-The last two tell Corbomite/Atlas 1). what namespace to use when creating the data skeleton classes, and 2). what directory to put those classes in.
+The last two tell Corbomite (Atlas) 1). what namespace to use when creating the data skeleton classes, and 2). what directory to put those classes in.
 
 ### Generating the skeleton
 

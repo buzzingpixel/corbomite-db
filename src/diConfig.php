@@ -25,17 +25,29 @@ return [
     PDO::class => static function () {
         $dsnPrefix = getenv('DB_DSN_PREFIX') ?: 'mysql';
         $host = getenv('DB_HOST') ?: 'localhost';
+        $port = getenv('DB_PORT') ?: '';
         $db = getenv('DB_DATABASE');
+        $cset = getenv('DB_CHARSET') ?: 'utf8mb4';
         $user = getenv('DB_USER');
         $pass = getenv('DB_PASSWORD');
-        $cset = getenv('DB_CHARSET') ?: 'utf8mb4';
-        $port = getenv('DB_PORT') ?: '';
 
-        if ($port) {
-            $port = ':' . $port;
+        $dsnArray = [
+            'host=' . $host
+        ];
+
+        if ($port && $port !== 'false') {
+            $dsnArray[] = 'port=' . $port;
         }
 
-        $dsn = $dsnPrefix . ':host=' . $host . $port . ';dbname=' . $db . ';charset=' . $cset;
+        if ($db && $db !== 'false') {
+            $dsnArray[] = 'dbname=' . $db;
+        }
+
+        if ($cset && $cset !== 'false') {
+            $dsnArray[] = 'charset=' . $cset;
+        }
+
+        $dsn = $dsnPrefix . ':' . implode(';', $dsnArray);
 
         return new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

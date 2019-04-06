@@ -17,7 +17,6 @@
 /*-workspace
 /.env
 /node_modules
-/.idea
 /*.sublime-*
 /vendor/*
 

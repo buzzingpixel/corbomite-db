@@ -1,30 +1,32 @@
 <?php
-declare(strict_types=1);
 
-/**
- * @author TJ Draper <tj@buzzingpixel.com>
- * @copyright 2019 BuzzingPixel, LLC
- * @license Apache-2.0
- */
+declare(strict_types=1);
 
 namespace corbomite\db;
 
-use Atlas\Orm\Atlas;
-use Atlas\Table\TableLocator;
-use Atlas\Pdo\ConnectionLocator;
-use \Atlas\Mapper\MapperLocator;
+use Atlas\Mapper\MapperLocator;
 use Atlas\Mapper\MapperQueryFactory;
+use Atlas\Orm\Atlas;
 use Atlas\Orm\Transaction\AutoCommit;
 use Atlas\Orm\Transaction\Transaction;
+use Atlas\Pdo\ConnectionLocator;
+use Atlas\Table\TableLocator;
+use function array_pop;
+use function end;
+use function is_string;
+use function is_subclass_of;
 
 class Orm extends Atlas
 {
-    public static function new(...$args): Atlas
+    /**
+     * @param mixed $args
+     */
+    public static function new(...$args) : Atlas
     {
-        $transactionClass = AutoCommit::CLASS;
+        $transactionClass = AutoCommit::class;
 
         $end = end($args);
-        if (is_string($end) && is_subclass_of($end, Transaction::CLASS)) {
+        if (is_string($end) && is_subclass_of($end, Transaction::class)) {
             $transactionClass = array_pop($args);
         }
 

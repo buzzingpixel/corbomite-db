@@ -1,55 +1,51 @@
 <?php
-declare(strict_types=1);
 
-/**
- * @author TJ Draper <tj@buzzingpixel.com>
- * @copyright 2019 BuzzingPixel, LLC
- * @license Apache-2.0
- */
+declare(strict_types=1);
 
 namespace corbomite\db;
 
-use corbomite\di\Di;
+use Atlas\Orm\Atlas;
 use Atlas\Pdo\Connection;
-use Ramsey\Uuid\UuidFactory;
+use corbomite\db\interfaces\QueryModelInterface;
 use corbomite\db\models\QueryModel;
 use corbomite\db\services\BuildQueryService;
-use corbomite\db\interfaces\QueryModelInterface;
+use corbomite\di\Di;
+use Ramsey\Uuid\UuidFactory;
 
 class Factory
 {
-    public function makeOrm(): Orm
+    public function makeOrm() : Atlas
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return Di::make(Orm::class);
+        return Orm::new(Di::diContainer()->get(Connection::class));
     }
 
-    public function getPDO(): PDO
+    public function getPDO() : PDO
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return Di::get(PDO::class);
+        return Di::diContainer()->get(PDO::class);
     }
 
-    public function connection(): Connection
+    public function connection() : Connection
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return Di::get(Connection::class);
+        return Di::diContainer()->get(Connection::class);
     }
 
-    public function makeQueryModel(): QueryModelInterface
+    public function makeQueryModel() : QueryModelInterface
     {
         return new QueryModel();
     }
 
-    public function buildQueryService(): BuildQueryService
+    public function buildQueryService() : BuildQueryService
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return Di::get(BuildQueryService::class);
+        return Di::diContainer()->get(BuildQueryService::class);
     }
 
-    public function uuidFactoryWithOrderedTimeCodec(): UuidFactory
+    public function uuidFactoryWithOrderedTimeCodec() : UuidFactory
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return Di::get(UuidFactory::class);
+        return Di::diContainer()->get('UuidFactoryWithOrderedTimeCodec');
     }
 }

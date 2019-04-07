@@ -1,33 +1,30 @@
 <?php
-declare(strict_types=1);
 
-/**
- * @author TJ Draper <tj@buzzingpixel.com>
- * @copyright 2019 BuzzingPixel, LLC
- * @license Apache-2.0
- */
+declare(strict_types=1);
 
 namespace corbomite\db\models;
 
-use corbomite\di\Di;
-use Ramsey\Uuid\UuidFactoryInterface;
+use corbomite\db\Factory;
 use corbomite\db\interfaces\UuidModelInterface;
+use Ramsey\Uuid\UuidFactoryInterface;
 
 class UuidModel implements UuidModelInterface
 {
+    /** @var string */
     private $uuid;
 
-    /** @var UuidFactoryInterface $uuidFactory */
+    /** @var UuidFactoryInterface */
     private $uuidFactory;
 
     public function __construct(?string $uuid = null)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        $this->uuidFactory = Di::get('UuidFactoryWithOrderedTimeCodec');
+        $this->uuidFactory = (new Factory())->uuidFactoryWithOrderedTimeCodec();
 
         if ($uuid === null) {
             /** @noinspection PhpUnhandledExceptionInspection */
             $this->uuid = $this->uuidFactory->uuid1()->toString();
+
             return;
         }
 
@@ -36,26 +33,27 @@ class UuidModel implements UuidModelInterface
         $this->uuid = $this->uuidFactory->fromString($uuid)->toString();
     }
 
-    public function equals(UuidModelInterface $identity): bool
+    public function equals(UuidModelInterface $identity) : bool
     {
         return $this->toString() === $identity->toString();
     }
 
-    public function toString(): string
+    public function toString() : string
     {
         return $this->uuid;
     }
 
-    public function toBytes(): string
+    public function toBytes() : string
     {
         return $this->uuidFactory->fromString($this->toString())->getBytes();
     }
 
-    public static function fromBytes(string $bytes): UuidModelInterface
+    public static function fromBytes(string $bytes) : UuidModelInterface
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         /** @var UuidFactoryInterface $uuidFactory */
-        $uuidFactory = Di::get('UuidFactoryWithOrderedTimeCodec');
+        $uuidFactory = (new Factory())->uuidFactoryWithOrderedTimeCodec();
+
         return new static($uuidFactory->fromBytes($bytes)->toString());
     }
 }

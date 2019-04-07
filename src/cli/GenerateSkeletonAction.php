@@ -1,16 +1,12 @@
 <?php
-declare(strict_types=1);
 
-/**
- * @author TJ Draper <tj@buzzingpixel.com>
- * @copyright 2019 BuzzingPixel, LLC
- * @license Apache-2.0
- */
+declare(strict_types=1);
 
 namespace corbomite\db\cli;
 
 class GenerateSkeletonAction
 {
+    /** @var SkeletonCliGenerator */
     private $skeleton;
 
     public function __construct(SkeletonCliGenerator $skeleton)
@@ -18,9 +14,10 @@ class GenerateSkeletonAction
         $this->skeleton = $skeleton;
     }
 
-    public function __invoke(): ?int
+    public function __invoke() : ?int
     {
         $skeleton = $this->skeleton;
+
         return $skeleton();
     }
 }

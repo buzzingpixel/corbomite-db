@@ -1,21 +1,18 @@
 <?php
-declare(strict_types=1);
 
-/**
- * @author TJ Draper <tj@buzzingpixel.com>
- * @copyright 2019 BuzzingPixel, LLC
- * @license Apache-2.0
- */
+declare(strict_types=1);
 
 namespace corbomite\db\services;
 
-use corbomite\db\Factory;
 use Atlas\Mapper\MapperSelect;
-use corbomite\db\interfaces\QueryModelInterface;
+use corbomite\db\Factory;
 use corbomite\db\interfaces\BuildQueryInterface;
+use corbomite\db\interfaces\QueryModelInterface;
+use function is_array;
 
 class BuildQueryService implements BuildQueryInterface
 {
+    /** @var Factory */
     private $ormFactory;
 
     public function __construct(Factory $ormFactory)
@@ -26,21 +23,25 @@ class BuildQueryService implements BuildQueryInterface
     public function __invoke(
         string $select,
         QueryModelInterface $fetchDataParams
-    ): MapperSelect {
+    ) : MapperSelect {
         return $this->build($select, $fetchDataParams);
     }
 
     public function build(
         string $select,
         QueryModelInterface $fetchDataParams
-    ): MapperSelect {
+    ) : MapperSelect {
         $query = $this->ormFactory->makeOrm()->select($select);
 
-        if ($limit = $fetchDataParams->limit()) {
+        $limit = $fetchDataParams->limit();
+
+        if ($limit) {
             $query->limit($limit);
         }
 
-        if ($offset = $fetchDataParams->offset()) {
+        $offset = $fetchDataParams->offset();
+
+        if ($offset) {
             $query->offset($offset);
         }
 
@@ -66,7 +67,7 @@ class BuildQueryService implements BuildQueryInterface
                     $query->catWhere(' ' . $val['operator'] . ' ');
                 }
 
-                if (\is_array($val['val'])) {
+                if (is_array($val['val'])) {
                     $val['comparison'] = $val['comparison'] === '!=' ||
                     $val['comparison'] === 'NOT IN' ?
                         'NOT IN' :

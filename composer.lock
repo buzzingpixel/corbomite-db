@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "667de8f5e16876a4ebf7db0f80773408",
+    "content-hash": "d8acea49f24d0771bd6adbbebf60157b",
     "packages": [
         {
             "name": "2bj/phanybar",
